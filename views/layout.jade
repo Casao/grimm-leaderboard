@@ -5,9 +5,14 @@ html
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(type="application/javascript", src="/javascripts/application.js")
   body
     nav.navbar.is-light(role="navigation" aria-label="main navigation")
-      .navbar-menu
+      button.navbar-burger(data-target="navMenu")
+        span
+        span
+        span
+      .navbar-menu#navMenu
         a.navbar-item(href='/pvp') PvP
         a.navbar-item(href='/pve') PvE
         a.navbar-item(href='/raid') Raid
