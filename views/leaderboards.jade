@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 #{lbType} Leaderboards
+  .columns.is-multiline
+    each data, category in categories
+      .column.is-one-quarter
+        .panel
+          .panel-heading= category.slice(2).replace(/([A-Z])/g, " $1").trim()
+          .panel-block
+            ol
+              each entry in data.entries
+                li.media
+                  .media-left
+                    img.image.is-64x64(src='https://bungie.net/#{ entry.player.destinyUserInfo.iconPath }')
+                  .media-content
+                    .user= entry.player.destinyUserInfo.displayName
+                    .value= entry.value.basic.displayValue
