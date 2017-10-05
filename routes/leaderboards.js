@@ -1,4 +1,4 @@
-const leaderboards = require('../services/api');
+const leaderboards = require('../services/api').leaderboards;
 
 const express = require('express');
 const router = express.Router();
@@ -12,6 +12,8 @@ router.get('/pvp', function (req, res, next) {
     res.locals.categories = results.Response.allPvP;
     res.locals.lbType = 'PvP';
     res.render('leaderboards');
+  }).catch(err => {
+    console.log(err)
   });
 });
 
