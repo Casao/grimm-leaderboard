@@ -40,6 +40,8 @@ router.get('/', function(req, res, next) {
     res.locals.factionDefs = factionDefs;
     res.locals.tokensToFactions = tokensToFactions;
     res.render('profile')
+  }).catch(err => {
+    console.log(Object.inspect(err, false, null));
   });
 });
 
