@@ -19,7 +19,8 @@ const factionTokens = [
   3957264072,
   2270228604,
   2959556799,
-  1270564331
+  1270564331,
+  685157383
 ]
 
 function leaderboards(type, count = 20) {

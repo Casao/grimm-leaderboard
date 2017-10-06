@@ -584,7 +584,72 @@ const tokenDefs = {
     "hash": 3825769808,
     "index": 1372,
     "redacted": false
-  }
+  },
+  "685157383": {
+    "displayProperties": {
+      "description": "Materials that may be useful for modifying weapons and armor.\n\nBring these to a Gunsmith to increase your reputation with them.",
+      "name": "Gunsmith Materials",
+      "icon": "/common/destiny2_content/icons/658c727dd5a8d546758c2d96fb96ea12.jpg",
+      "hasIcon": true
+    },
+    "itemTypeDisplayName": "Redeemable",
+    "itemTypeAndTierDisplayName": "Uncommon Redeemable",
+    "displaySource": "",
+    "action": {
+      "verbName": "Discard",
+      "isPositive": false,
+      "requiredCooldownSeconds": 0,
+      "requiredItems": [],
+      "progressionRewards": [],
+      "actionTypeLabel": "shard",
+      "rewardSheetHash": 0,
+      "rewardItemHash": 0,
+      "rewardSiteHash": 0,
+      "requiredCooldownHash": 0,
+      "deleteOnAction": true,
+      "consumeEntireStack": true,
+      "useOnAcquire": false
+    },
+    "inventory": {
+      "maxStackSize": 999,
+      "bucketTypeHash": 1469714392,
+      "recoveryBucketTypeHash": 215593132,
+      "tierTypeHash": 2395677314,
+      "isInstanceItem": false,
+      "nonTransferrableOriginal": false,
+      "tierTypeName": "Uncommon",
+      "tierType": 3
+    },
+    "sourceData": {
+      "sourceHashes": [],
+      "sources": [
+        {
+          "level": 0,
+          "minQuality": 0,
+          "maxQuality": 0,
+          "minLevelRequired": 0,
+          "maxLevelRequired": 0,
+          "exclusivity": 0,
+          "computedStats": {},
+          "sourceHashes": []
+        }
+      ],
+      "exclusive": 0
+    },
+    "investmentStats": [],
+    "perks": [],
+    "nonTransferrable": false,
+    "itemCategoryHashes": [],
+    "specialItemType": 0,
+    "itemType": 0,
+    "itemSubType": 0,
+    "classType": 3,
+    "equippable": false,
+    "defaultDamageType": 0,
+    "hash": 685157383,
+    "index": 1382,
+    "redacted": false
+  },
 }
 
 const tokensToFaction = {
@@ -598,6 +663,7 @@ const tokensToFaction = {
   2959556799: '3398051042',
   3201839676: '1660497607',
   3825769808: '828982195',
+  685157383: '1021210278'
 }
 
 module.exports = { tokenDefs, tokensToFaction }
