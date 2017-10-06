@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "heroku-postbuild": "mv node_modules/the-traveler/build/traveler.js node_modules/the-traveler/build/Traveler.js"
   },
   "engines": {
     "node": "8.x"

@@ -3,7 +3,7 @@ const Enums = require('the-traveler/build/enums');
 
 const traveler = new Traveler({
   apikey: process.env.TRAVELER_API_KEY,
-  userAgent: 'https://grimm.draecas.com', //used to identify your request to the API
+  userAgent: process.env.USER_AGENT, //used to identify your request to the API
   oauthClientId: process.env.TRAVELER_CLIENT_ID,
   oauthClientSecret: process.env.TRAVELER_CLIENT_SECRET,
   debug: true
