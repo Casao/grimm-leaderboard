@@ -1,5 +1,5 @@
 const Traveler = require('the-traveler').default;
-const Enums = require('the-traveler/build/enums')
+const Enums = require('the-traveler/build/enums');
 
 const traveler = new Traveler({
   apikey: process.env.TRAVELER_API_KEY,
@@ -9,7 +9,7 @@ const traveler = new Traveler({
   debug: true
 });
 
-const tokens = [
+const factionTokens = [
   183980811,
   494493680,
   2640973641,
@@ -30,11 +30,41 @@ function url() {
   return traveler.generateOAuthURL();
 }
 
-function auth(code, cb) {
-  traveler.getAccessToken(code).then(oauth => {
-    traveler.oauth = oauth;
-    return traveler.getMembershipDataForCurrentUser()
-  }).then(membershipInfo => {
+function auth(code) {
+  return traveler.getAccessToken(code)
+}
+
+function factionData(oauth) {
+  traveler.oauth = oauth;
+  return new Promise((resolve, reject) => {
+    traveler.getMembershipDataForCurrentUser().then(membershipInfo => {
+      const firstProfile = membershipInfo.Response.destinyMemberships[0]
+      return traveler.getProfile(firstProfile.membershipType, firstProfile.membershipId, { components: [Enums.ComponentType.ProfileInventories, Enums.ComponentType.CharacterProgressions, Enums.ComponentType.Characters] } )
+    }).then(profile => {
+      var inventories = profile.Response.profileInventory.data.items;
+      var characterProgressions = profile.Response.characterProgressions.data;
+      var characters = profile.Response.characters.data;
+      const combinedCharacters = {};
+      Object.keys(characters).map(key => {
+        var character = characters[key];
+        character.factions = characterProgressions[key].factions;
+        combinedCharacters[key] = character;
+      });
+      var tokens = inventories.filter(item => {
+        return factionTokens.includes(item.itemHash)
+      }).reduce((obj, item) => {
+        obj[item.itemHash] = item;
+        return obj;
+      }, {});
+      resolve({ tokens, combinedCharacters });
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}
+
+function thing(cb) {
+  traveler.getMembershipDataForCurrentUser().then(membershipInfo => {
     const firstProfile = membershipInfo.Response.destinyMemberships[0]
     return traveler.getProfile(firstProfile.membershipType, firstProfile.membershipId, { components: [Enums.ComponentType.ProfileInventories, Enums.ComponentType.CharacterProgressions] } )
   }).then(inventories => {
@@ -52,4 +82,4 @@ function auth(code, cb) {
   })
 }
 
-module.exports = { url, leaderboards, auth };
+module.exports = { url, leaderboards, auth, factionData };
