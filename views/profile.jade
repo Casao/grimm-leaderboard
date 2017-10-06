@@ -25,10 +25,14 @@ block content
                     .media(class={ canLevel: token.quantity >= toLevel })
                       .media-left 
                         img.image.is-64x64(src='https://bungie.net/#{ char.emblemPath }')
-                      div.media-content
+                      .media-content
                         .class= classDefs[char.classHash].displayProperties.name
                         .fac-rank Level #{faction.level} 
                         .tokens-req #{toLevel} tokens to next level
+                      if token.quantity >= toLevel
+                        - remaining = token.quantity - toLevel
+                        .media-right
+                          .count.is-size-1.has-text-centered.has-text-weight-bold.has-text-grey-light #{1 + Math.floor(remaining / 20)}x
 
     //- ul
     //-   each data, characterId in chars
