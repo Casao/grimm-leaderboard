@@ -3,7 +3,7 @@ const Enums = require('the-traveler/build/enums');
 
 const traveler = new Traveler({
   apikey: process.env.TRAVELER_API_KEY,
-  userAgent: 'https://localhost:3000', //used to identify your request to the API
+  userAgent: 'https://grimm.draecas.com', //used to identify your request to the API
   oauthClientId: process.env.TRAVELER_CLIENT_ID,
   oauthClientSecret: process.env.TRAVELER_CLIENT_SECRET,
   debug: true
@@ -61,25 +61,6 @@ function factionData(oauth) {
       reject(err);
     });
   });
-}
-
-function thing(cb) {
-  traveler.getMembershipDataForCurrentUser().then(membershipInfo => {
-    const firstProfile = membershipInfo.Response.destinyMemberships[0]
-    return traveler.getProfile(firstProfile.membershipType, firstProfile.membershipId, { components: [Enums.ComponentType.ProfileInventories, Enums.ComponentType.CharacterProgressions] } )
-  }).then(inventories => {
-    var userTokens = inventories.Response.profileInventory.data.items.filter(item => {
-      return tokens.includes(item.itemHash)
-    }).reduce((obj, item) => {
-      obj[item.itemHash] = item;
-      return obj;
-    }, {});
-    console.log(inventories)
-  }).catch(err => {
-    console.log(err);
-  }).catch(err => {
-    console.log(err)
-  })
 }
 
 module.exports = { url, leaderboards, auth, factionData };
