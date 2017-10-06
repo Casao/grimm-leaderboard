@@ -22,8 +22,7 @@ router.get('/callback', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
   if (!req.session.oauth) {
-    res.redirect('/profile/login');
-    next();
+    return res.redirect('/profile/login');
   }
 
   api.factionData(req.session.oauth).then(data => {
