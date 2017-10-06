@@ -14,6 +14,9 @@ router.get('/pvp', function (req, res, next) {
     res.render('leaderboards');
   }).catch(err => {
     console.log(err)
+    if (err.ErrorCode == 5) {
+      res.render('offline')
+    }
   });
 });
 
@@ -22,6 +25,11 @@ router.get('/raid', function (req, res, next) {
     res.locals.categories = results.Response.raid;
     res.locals.lbType = 'Raid';
     res.render('leaderboards');
+  }).catch(err => {
+    console.log(err)
+    if (err.ErrorCode == 5) {
+      res.render('offline')
+    }
   });
 });
 
@@ -30,6 +38,11 @@ router.get('/pve', function (req, res, next) {
     res.locals.categories = results.Response.allPvE;
     res.locals.lbType = 'PvE';
     res.render('leaderboards');
+  }).catch(err => {
+    console.log(err)
+    if (err.ErrorCode == 5) {
+      res.render('offline')
+    }
   });
 });
 
@@ -38,6 +51,11 @@ router.get('/trials', function (req, res, next) {
     res.locals.categories = results.Response.trialsofthenine;
     res.locals.lbType = 'Trials';
     res.render('leaderboards');
+  }).catch(err => {
+    console.log(err)
+    if (err.ErrorCode == 5) {
+      res.render('offline')
+    }
   });
 });
 
