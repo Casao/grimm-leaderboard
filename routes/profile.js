@@ -2,7 +2,8 @@ const api = require('../services/api');
 const tokenDefs = require('../data/tokens').tokenDefs;
 const classDefs = require('../data/classes').classDefs;
 const factionDefs = require('../data/factions').factionDefs;
-const tokensToFactions = require('../data/tokens').tokensToFaction;
+const factionsToRedeemables = require('../data/factions').factionsToRedeemables;
+const bb = require('bluebird');
 
 var express = require('express');
 var router = express.Router();
@@ -26,22 +27,24 @@ router.get('/', function(req, res, next) {
   }
 
   api.factionData(req.session.oauth).then(data => {
-    const tokens = data.tokens;
-    const characters = data.combinedCharacters;
-    const combinedTokens = {};
-    Object.keys(tokens).map((key) => {
-      var tokenData = tokens[key];
-      Object.assign(tokenData, tokenDefs[key])
-      combinedTokens[key] = tokenData;
-    });
-    res.locals.tokens = combinedTokens;
-    res.locals.chars = characters;
+    res.locals.tokens = data.tokens;
+    res.locals.chars = data.combinedCharacters;;
     res.locals.classDefs = classDefs;
-    res.locals.factionDefs = factionDefs;
-    res.locals.tokensToFactions = tokensToFactions;
-    res.render('profile')
+    res.locals.factionsToRedeemables = factionsToRedeemables;
+    tokenDefs().then(tokenDefinitions => {
+      res.locals.tokenDefs = tokenDefinitions;
+      factionDefs().then(factionDefinitions => {
+        res.locals.factionDefs = factionDefinitions
+        res.render('profile');
+      })
+    })
   }).catch(err => {
-    console.log(Object.inspect(err, false, null));
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+  
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
   });
 });
 

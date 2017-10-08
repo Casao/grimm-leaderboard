@@ -9,6 +9,7 @@
     "node": "8.x"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "~1.15.2",
     "bulma": "^0.5.3",
     "cookie-parser": "~1.4.3",
@@ -18,6 +19,8 @@
     "express-session": "^1.15.6",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
+    "node-redis-cache": "^1.1.0",
+    "request-promise": "^4.2.2",
     "serve-favicon": "~2.3.0",
     "the-traveler": "~0.4.2"
   }

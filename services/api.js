@@ -9,7 +9,7 @@ const traveler = new Traveler({
   debug: true
 });
 
-const factionTokens = [
+const factionItems = [
   183980811,
   494493680,
   2640973641,
@@ -20,7 +20,16 @@ const factionTokens = [
   2270228604,
   2959556799,
   1270564331,
-  685157383
+  685157383,
+  478751073,
+  950899352,
+  3487922223,
+  2949414982,
+  461171930,
+  2014411539,
+  3756389242,
+  1305274547,
+  685157381
 ]
 
 function leaderboards(type, count = 20) {
@@ -52,7 +61,7 @@ function factionData(oauth) {
         combinedCharacters[key] = character;
       });
       var tokens = inventories.filter(item => {
-        return factionTokens.includes(item.itemHash)
+        return factionItems.includes(item.itemHash)
       }).reduce((obj, item) => {
         obj[item.itemHash] = item;
         return obj;
