@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "heroku-postbuild": "mv node_modules/the-traveler/build/traveler.js node_modules/the-traveler/build/Traveler.js"
+    "start": "node ./bin/www"
   },
   "engines": {
     "node": "8.x"
@@ -20,6 +19,6 @@
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
-    "the-traveler": "~0.4.1"
+    "the-traveler": "~0.4.2"
   }
 }

@@ -844,9 +844,9 @@ stringstream@~0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-0.0.5.tgz#4e484cd4de5a0bbbee18e46307710a8a81621878"
 
-the-traveler@~0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/the-traveler/-/the-traveler-0.4.1.tgz#95c65a9b8fb0da92107c6a5aea6605b24271aed0"
+the-traveler@~0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/the-traveler/-/the-traveler-0.4.2.tgz#48a12be141d2571f148090959fd844ba890b68c8"
   dependencies:
     "@types/request-promise-native" "^1.0.6"
     es6-promise "^4.1.1"
