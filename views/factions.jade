@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  h1 Faction Ranks
+    ul
+      each redeemables, factionId in factionsToRedeemables
+        - faction = factionDefs[factionId]
+        li.media
+          .media-left
+            img.image.is-128x128(src='https://bungie.net#{ faction.displayProperties.icon }')
+          .media-content
+            h2.faction-name= faction.displayProperties.name
+            .desc= faction.displayProperties.description
+            .tokens.columns
+              each tokenId in redeemables
+                - token = tokenDefs[tokenId] || { displayProperties: {} }
+                - userToken = tokens[tokenId] || { quantity: 0 }
+                .column
+                  .media
+                    .media-left
+                      img.image.is-32x32(src='https://bungie.net#{ token.displayProperties.icon }')
+                    .media-content
+                      h3.name= token.displayProperties.name
+                      .quantity x#{ userToken.quantity }
+            .chars.columns
+              each char, characterId in chars
+                - charFaction = char.factions[factionId] ||  { progressToNextLevel: 2000 }
+                - toLevel = Number(Math.ceil((2000 - charFaction.progressToNextLevel) / 100))
+                .column
+                  .media(class={ canLevel: token.quantity >= toLevel })
+                    .media-left
+                      img.image.is-64x64(src='https://bungie.net#{ char.emblemPath }')
+                    .media-content
+                      .class= classDefs[char.classHash].displayProperties.name
+                      .fac-rank Lvl #{ charFaction.level }
+                      .tokens-req #{ toLevel } tokens to next level

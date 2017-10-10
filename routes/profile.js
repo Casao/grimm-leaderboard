@@ -35,7 +35,7 @@ router.get('/', function(req, res, next) {
     res.locals.factionsToRedeemables = factionsToRedeemables;
     res.locals.tokenDefs = tokenDefinitions;
     res.locals.factionDefs = factionDefinitions
-    res.render('profile');
+    res.render('factions');
   }).catch(err => {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
