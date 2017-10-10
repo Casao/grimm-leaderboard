@@ -29,7 +29,8 @@ const factionItems = [
   2014411539,
   3756389242,
   1305274547,
-  685157381
+  685157381,
+  1873857625
 ]
 
 function leaderboards(type, count = 20) {

@@ -2,7 +2,7 @@ const cache = new (require('node-redis-cache'))();
 const rp = require('request-promise');
 
 const factionDefs = function() {
-  return rp({ uri: 'https://destiny.plumbing/en/raw/DestinyFactionDefinition.json', json: true });
+  return rp({ uri: 'https://destiny.plumbing/2/en/raw/DestinyFactionDefinition.json', json: true });
 }
 
 const factionsToRedeemables = {
@@ -14,6 +14,7 @@ const factionsToRedeemables = {
   2105209711: ['2270228604'], // New Monarchy
   3398051042: ['2959556799'], // Dead Orbit
   24856709: ['1505278293'], // Calus
+  1761642340: ['1873857625'], // Iron Banner
   1021210278: ['685157383', '685157381'], // Gunsmith
   4235119312: ['2640973641', '950899352', '478751073'], // EDZ  
   4196149087: ['494493680', '2014411539', '461171930'], // Titan
