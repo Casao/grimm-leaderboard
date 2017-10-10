@@ -1,4 +1,4 @@
-const cache = new (require('node-redis-cache'))();
+// const cache = new (require('node-redis-cache'))();
 const rp = require('request-promise');
 
 const tokenDefs = function() {
