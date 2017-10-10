@@ -5,7 +5,7 @@ const cache = require('../services/cache').cache;
 const factionDefs = function() {
   return cache.wrap('factionDefs', () => {
     return rp({ uri: 'https://destiny.plumbing/2/en/raw/DestinyFactionDefinition.json', json: true });
-  })
+  }, { ttl: 3600 });
 }
 
 const factionsToRedeemables = {

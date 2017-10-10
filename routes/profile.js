@@ -16,6 +16,7 @@ router.get('/login', function (req, res, next) {
 router.get('/callback', function(req, res, next) {
   const code = req.query.code
   api.auth(code).then((oauth) => {
+    req.session.cookie.maxAge = 3600000;
     req.session.oauth = oauth;
     res.redirect('/profile');
   });

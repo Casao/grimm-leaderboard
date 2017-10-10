@@ -4,7 +4,7 @@ const cache = require('../services/cache').cache;
 const tokenDefs = function() {
   return cache.wrap('tokenDefs', () => {
     return rp({ uri: 'https://destiny.plumbing/2/en/items/None.json', json: true });
-  });
+  }, { ttl: 3600 });
 }
 
 const tokensToFaction = {

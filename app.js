@@ -7,6 +7,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 
 var index = require('./routes/index');
 var leaderboards = require('./routes/leaderboards');
@@ -25,7 +26,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+app.use(session({
+  store: new RedisStore({ url: process.env.REDIS_URL, db: 1}),
+  secret: 'dilz'
+}));
 
 app.use('/', leaderboards);
 app.use('/profile', profile);
