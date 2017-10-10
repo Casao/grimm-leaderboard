@@ -1,13 +1,18 @@
 const Traveler = require('the-traveler').default;
 const Enums = require('the-traveler/build/enums');
 
-const traveler = new Traveler({
+const travelerOptions = {
   apikey: process.env.TRAVELER_API_KEY,
   userAgent: process.env.USER_AGENT, //used to identify your request to the API
   oauthClientId: process.env.TRAVELER_CLIENT_ID,
-  oauthClientSecret: process.env.TRAVELER_CLIENT_SECRET,
-  debug: true
-});
+  oauthClientSecret: process.env.TRAVELER_CLIENT_SECRET
+}
+
+if (process.env.DEV == 'true') {
+  travelerOptions.debug = true
+}
+
+const traveler = new Traveler(travelerOptions);
 
 const factionItems = [
   183980811,
