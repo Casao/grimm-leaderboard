@@ -26,18 +26,15 @@ router.get('/', function(req, res, next) {
     return res.redirect('/profile/login');
   }
 
-  api.factionData(req.session.oauth).then(data => {
+  bb.all([api.factionData(req.session.oauth), tokenDefs(), factionDefs()]).then(vals => {
+    const [data, tokenDefinitions, factionDefinitions] = vals;    
     res.locals.tokens = data.tokens;
     res.locals.chars = data.combinedCharacters;;
     res.locals.classDefs = classDefs;
     res.locals.factionsToRedeemables = factionsToRedeemables;
-    tokenDefs().then(tokenDefinitions => {
-      res.locals.tokenDefs = tokenDefinitions;
-      factionDefs().then(factionDefinitions => {
-        res.locals.factionDefs = factionDefinitions
-        res.render('profile');
-      })
-    })
+    res.locals.tokenDefs = tokenDefinitions;
+    res.locals.factionDefs = factionDefinitions
+    res.render('profile');
   }).catch(err => {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

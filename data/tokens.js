@@ -1,8 +1,10 @@
-// const cache = new (require('node-redis-cache'))();
 const rp = require('request-promise');
+const cache = require('../services/cache').cache;
 
 const tokenDefs = function() {
-  return rp({ uri: 'https://destiny.plumbing/2/en/items/None.json', json: true });
+  return cache.wrap('tokenDefs', () => {
+    return rp({ uri: 'https://destiny.plumbing/2/en/items/None.json', json: true });
+  });
 }
 
 const tokensToFaction = {
