@@ -2,6 +2,7 @@ const api = require('../services/api');
 const itemDefs = require('../data/items').itemDefs;
 const classDefs = require('../data/classes').classDefs;
 const factionDefs = require('../data/factions').factionDefs;
+const factionList = require('../data/factions').factionList;
 const bb = require('bluebird');
 const _ = require('lodash');
 
@@ -27,11 +28,11 @@ router.get('/', function(req, res, next) {
     return res.redirect('/profile/login');
   }
 
-  bb.all([api.factionData(req.session.oauth), itemDefs(), factionDefs()]).then(vals => {
-    const [data, itemDefinitions, factionDefinitions] = vals;
+  bb.all([api.factionData(req.session.oauth), itemDefs(), factionDefs(), factionList()]).then(vals => {
+    const [data, itemDefinitions, factionDefinitions, factionListing] = vals;
     res.locals.tokens = data.tokens;
     res.locals.chars = data.combinedCharacters;
-    res.locals.factionList = _.reject(Object.keys(factionDefinitions), (factionId) => typeof factionDefinitions[factionId]['tokenValues'] !== 'object');
+    res.locals.factionList = factionListing;
     res.locals.classDefs = classDefs;
     res.locals.itemDefs = itemDefinitions;
     res.locals.factionDefs = factionDefinitions;

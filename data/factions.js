@@ -13,4 +13,8 @@ const factionTokens = function() {
   return factionDefs().then((factions) => _.flatten(_.values(factions).map((faction) => Object.keys(faction['tokenValues'] || {}))))
 }
 
-module.exports = { factionDefs, factionTokens };
+const factionList = function() {
+  return factionDefs().then((factions) => _.reject(Object.keys(factions), (factionId) => typeof factions[factionId]['tokenValues'] !== 'object'))
+}
+
+module.exports = { factionDefs, factionTokens, factionList };
