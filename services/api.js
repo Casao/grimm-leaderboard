@@ -1,5 +1,6 @@
 const Traveler = require('the-traveler').default;
 const Enums = require('the-traveler/build/enums');
+const factionTokens = require('../data/factions').factionTokens;
 
 const travelerOptions = {
   apikey: process.env.TRAVELER_API_KEY,
@@ -42,11 +43,13 @@ function factionData(oauth) {
         character.factions = characterProgressions[key].factions;
         combinedCharacters[key] = character;
       });
-      var tokens = inventories.reduce((obj, item) => {
-        obj[item.itemHash] = item;
-        return obj;
-      }, {});
-      resolve({ tokens, combinedCharacters });
+      factionTokens().then((factionItems) => {
+        var tokens = inventories.filter(item => factionItems.includes(item.itemHash.toString())).reduce((obj, item) => {
+          obj[item.itemHash] = item;
+          return obj;
+        }, {});
+        resolve({ tokens, combinedCharacters });
+      })
     }).catch(err => {
       reject(err);
     });
