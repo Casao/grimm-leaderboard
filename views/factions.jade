@@ -3,7 +3,7 @@ extends layout
 block content
   h1 Faction Ranks
     ul
-      each redeemables, factionId in factionsToRedeemables
+      each factionId in factionList
         - faction = factionDefs[factionId]
         li.media
           .media-left
@@ -12,8 +12,9 @@ block content
             h2.faction-name= faction.displayProperties.name
             .desc= faction.displayProperties.description
             .tokens.columns
-              each tokenId in redeemables
-                - token = tokenDefs[tokenId] || { displayProperties: {} }
+              - tokensList = faction.tokenValues || {}
+              each tokenId in Object.keys(tokensList).sort((a, b) => tokensList[b] - tokensList[a])
+                - token = itemDefs[tokenId] || { displayProperties: {} }
                 - userToken = tokens[tokenId] || { quantity: 0 }
                 .column
                   .media
@@ -23,14 +24,20 @@ block content
                       h3.name= token.displayProperties.name
                       .quantity x#{ userToken.quantity }
             .chars.columns
+              - expAvailable = Object.keys(tokensList).reduce((memo, curr) => {
+                -  let token = tokens[curr] || { quantity: 0 }
+                -    return memo + (tokensList[curr] * token.quantity)
+              -   }, 0)
               each char, characterId in chars
                 - charFaction = char.factions[factionId] ||  { progressToNextLevel: 2000 }
-                - toLevel = Number(Math.ceil((2000 - charFaction.progressToNextLevel) / 100))
+                - toLevel = Number(Math.ceil((charFaction.nextLevelAt - charFaction.progressToNextLevel)))
+                - levelsAvailable = Number(Math.ceil((expAvailable - toLevel) / charFaction.nextLevelAt))
+                - trueLevels = levelsAvailable > 0 ? levelsAvailable : 0
                 .column
-                  .media(class={ canLevel: token.quantity >= toLevel })
+                  .media(class={ canLevel: trueLevels > 0})
                     .media-left
                       img.image.is-64x64(src='https://bungie.net#{ char.emblemPath }')
                     .media-content
                       .class= classDefs[char.classHash].displayProperties.name
                       .fac-rank Lvl #{ charFaction.level }
-                      .tokens-req #{ toLevel } tokens to next level
+                      .levels-available #{ trueLevels } levels available

@@ -1,9 +1,9 @@
 const api = require('../services/api');
-const tokenDefs = require('../data/tokens').tokenDefs;
+const itemDefs = require('../data/items').itemDefs;
 const classDefs = require('../data/classes').classDefs;
 const factionDefs = require('../data/factions').factionDefs;
-const factionsToRedeemables = require('../data/factions').factionsToRedeemables;
 const bb = require('bluebird');
+const _ = require('lodash');
 
 var express = require('express');
 var router = express.Router();
@@ -27,19 +27,19 @@ router.get('/', function(req, res, next) {
     return res.redirect('/profile/login');
   }
 
-  bb.all([api.factionData(req.session.oauth), tokenDefs(), factionDefs()]).then(vals => {
-    const [data, tokenDefinitions, factionDefinitions] = vals;    
+  bb.all([api.factionData(req.session.oauth), itemDefs(), factionDefs()]).then(vals => {
+    const [data, itemDefinitions, factionDefinitions] = vals;
     res.locals.tokens = data.tokens;
-    res.locals.chars = data.combinedCharacters;;
+    res.locals.chars = data.combinedCharacters;
+    res.locals.factionList = _.reject(Object.keys(factionDefinitions), (factionId) => typeof factionDefinitions[factionId]['tokenValues'] !== 'object');
     res.locals.classDefs = classDefs;
-    res.locals.factionsToRedeemables = factionsToRedeemables;
-    res.locals.tokenDefs = tokenDefinitions;
-    res.locals.factionDefs = factionDefinitions
+    res.locals.itemDefs = itemDefinitions;
+    res.locals.factionDefs = factionDefinitions;
     res.render('factions');
   }).catch(err => {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
-  
+
     // render the error page
     res.status(err.status || 500);
     res.render('error');
