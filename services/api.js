@@ -1,6 +1,5 @@
 const Traveler = require('the-traveler').default;
 const Enums = require('the-traveler/build/enums');
-const factionsToRedeemables = require('../data/factions').factionsToRedeemables;
 
 const travelerOptions = {
   apikey: process.env.TRAVELER_API_KEY,
@@ -14,10 +13,6 @@ if (process.env.DEV == 'true') {
 }
 
 const traveler = new Traveler(travelerOptions);
-
-const factionItems = Object.keys(factionsToRedeemables).reduce((memo, key) => {
-  return memo.concat(factionsToRedeemables[key]);
-}, []);
 
 function leaderboards(type, count = 20) {
   return traveler.getClanLeaderboards(process.env.CLAN_ID, { maxtop: count, modes: [type] });
@@ -47,9 +42,7 @@ function factionData(oauth) {
         character.factions = characterProgressions[key].factions;
         combinedCharacters[key] = character;
       });
-      var tokens = inventories.filter(item => {
-        return factionItems.includes(item.itemHash.toString())
-      }).reduce((obj, item) => {
+      var tokens = inventories.reduce((obj, item) => {
         obj[item.itemHash] = item;
         return obj;
       }, {});

@@ -8,5 +8,4 @@ const factionDefs = function() {
   }, { ttl: 3600 });
 }
 
-
 module.exports = { factionDefs };
